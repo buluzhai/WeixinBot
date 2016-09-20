@@ -684,12 +684,17 @@ class WebWeixin(object):
             print '%s %s -> %s: %s' % (message_id, srcName.strip(), dstName.strip(), content.replace('<br/>', '\n'))
             logging.info('%s %s -> %s: %s' % (message_id, srcName.strip(),
                                               dstName.strip(), content.replace('<br/>', '\n')))
-
+    
+    def saveToEs(self,params,index):
+        url = "http://xxxx:9200/"+index+"/all"
+        print url
+        response = self._post(url, params)
+        
     def handleMsg(self, r):
         for msg in r['AddMsgList']:
             print '[*] 你有新的消息，请注意查收'
             logging.debug('[*] 你有新的消息，请注意查收')
-
+            self.saveToEs(msg,'weixin_msg')
             if self.DEBUG:
                 fn = 'msg' + str(int(random.random() * 1000)) + '.json'
                 with open(fn, 'w') as f:
