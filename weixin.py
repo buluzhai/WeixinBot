@@ -656,10 +656,13 @@ class WebWeixin(object):
             if msg['raw_msg']['FromUserName'][:2] == '@@':
                 # 接收到来自群的消息
                 if re.search(":<br/>", content, re.IGNORECASE):
-                    [people, content] = content.split(':<br/>')
-                    groupName = srcName
-                    srcName = self.getUserRemarkName(people)
-                    dstName = 'GROUP'
+                    try:
+                        [people, content] = content.split(':<br/>')
+                        groupName = srcName
+                        srcName = self.getUserRemarkName(people)
+                        dstName = 'GROUP'
+                    except ValueError as e:
+                        pass
                 else:
                     groupName = srcName
                     srcName = 'SYSTEM'
