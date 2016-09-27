@@ -246,6 +246,7 @@ class WebWeixin(object):
     def webwxgetcontact(self):
         SpecialUsers = self.SpecialUsers
         print self.base_uri
+        return True
         url = self.base_uri + '/webwxgetcontact?pass_ticket=%s&skey=%s&r=%s' % (
             self.pass_ticket, self.skey, int(time.time()))
         dic = self._post(url, {})
